@@ -95,6 +95,7 @@ DATABASES = {
        'default': {
            'ENGINE': 'djongo',
            'NAME': 'dashboard',
+           'ENFORCE_SCHEMA': False,
        }
 }
 # Password validation
