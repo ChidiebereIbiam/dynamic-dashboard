@@ -52,7 +52,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="{% static 'images/logo.png' %}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{user.name}}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -191,9 +191,12 @@
                       <i class="bi bi-currency-dollar"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$100</h6>
-                      <span class="text-danger small pt-1 fw-bold">0%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                      <h6>${{current_value}}</h6>
+                      {% if profit %}
+                      <span class="text-success small pt-1 fw-bold">{{portfolio_return}}% ({{trade_return}})</span> <span class="text-muted small pt-2 ps-1">Increase</span>
+                      {% else %}
+                      <span class="text-danger small pt-1 fw-bold">{{portfolio_return}}% ({{trade_return}})</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -207,37 +210,23 @@
             <div class="col-12">
               <div class="card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
+              
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <h5 class="card-title">Trade Report</h5>
 
                   <!-- Line Chart -->
                   <div id="reportsChart"></div>
 
                   <script>
+                    var outcome = {{outcome|safe}}
+                    var trade_time ={{trade_time|safe}}
+                    console.log(outcome)
+                    console.log(trade_time)
                     document.addEventListener("DOMContentLoaded", () => {
                       new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
+                        series: [ {
+                          name: 'Profit and Lose',
+                          data: outcome
                         }],
                         chart: {
                           height: 350,
@@ -249,7 +238,7 @@
                         markers: {
                           size: 4
                         },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        colors: ['#2eca6a', '#ff771d'],
                         fill: {
                           type: "gradient",
                           gradient: {
@@ -267,8 +256,8 @@
                           width: 2
                         },
                         xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                          type: 'time',
+                          categories: trade_time
                         },
                         tooltip: {
                           x: {
@@ -311,7 +300,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
  
-
+  <script src="{% static 'apexcharts/apexcharts.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'chart.js/chart.min.js' %}"></script>
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>

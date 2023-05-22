@@ -28,9 +28,38 @@ def stimulate_profile_and_loss():
         obj.portfolio_return = round(get_percentage_diff(obj.cost_basis, obj.current_value),2)
         obj.save()
 
-RepeatedTimer(60, stimulate_profile_and_loss)
+# RepeatedTimer(60, stimulate_profile_and_loss)
 
 
 @login_required
 def dashboard(request):
-    return render(request, 'core/dashboard.html')
+    outcome = []
+    trade_time = []
+    profit = False
+    trade_return = 0
+    
+    account = Account.objects.get(user_id = request.user.id)
+    stimulation = TradeDetail.objects.filter(account_id =account.id).order_by('trade_time')
+    for stimu in stimulation:
+        trade_time.append(stimu.trade_time.strftime("%H:%M:%S"))
+        outcome.append (stimu.outcome)
+
+    if account.current_value >= account.cost_basis:
+        trade_return = account.current_value - account.cost_basis
+        profit = True
+    else:
+        trade_return = account.cost_basis - account.current_value
+        profit = False
+
+
+    context = {
+        'outcome': outcome,
+        'trade_time': trade_time,
+        'current_value': account.current_value,
+        "portfolio_return":account.portfolio_return,
+        "trade_return": round(trade_return,2),
+        "profit":profit,
+
+    }
+
+    return render(request, 'core/dashboard.html', context)
