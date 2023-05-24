@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block main %}
-
-  <main id="main" class="main">
+<main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Customer Trade Details</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item active">Customer Trade Details</li>
+          <li class="breadcrumb-item active">{{user.name}}</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -118,73 +118,9 @@
 
               </div>
             </div><!-- End Reports -->
-            {% else %}
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card revenue-card">
+            
 
-
-                    <div class="card-body">
-                        <h5 class="card-title">Total Stock Cost Basis<span></span></h5>
-
-                        <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-currency-dollar"></i>
-                        </div>
-                        <div class="ps-3">
-                            <h6>${{total_cost_basis}}</h6>
-                        </div>
-                        </div>
-                    </div>
-
-                    </div>
-                </div>
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card revenue-card">
-    
-    
-                    <div class="card-body">
-                        <h5 class="card-title">Total Stock Current Value <span></span></h5>
-    
-                        <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-currency-dollar"></i>
-                        </div>
-                        <div class="ps-3">
-                            <h6>${{total_current_value}}</h6>
-                            {% if profit %}
-                            <span class="text-success small pt-1 fw-bold">${{total_trade_return}} ({{total_portfolio_return}}%)</span> <span class="text-muted small pt-2 ps-1">Increase</span>
-                            {% else %}
-                            <span class="text-danger small pt-1 fw-bold">${{total_trade_return}} ({{total_portfolio_return}}%)</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
-                            {% endif %}
-                        </div>
-                        </div>
-                    </div>
-    
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-12">
-
-                    <div class="card info-card customers-card">
-      
-                   
-      
-                      <div class="card-body">
-                        <h5 class="card-title">Customers </h5>
-      
-                        <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-people"></i>
-                          </div>
-                          <div class="ps-3">
-                            <h6>{{accounts}}</h6>
-      
-                          </div>
-                        </div>
-      
-                      </div>
-                    </div>
-      
+                    
                   </div><!-- End Customers Card -->
             {% endif %}
 
@@ -200,4 +136,6 @@
     </section>
 
   </main><!-- End #main -->
+
+
 {% endblock main %}

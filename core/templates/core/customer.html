@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block main %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Customers</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Customers</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">List of Customers</h5>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Cost Basis</th>
+                    <th scope="col">Current Value</th>
+                    <th scope="col">Portfolio Return</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for account in accounts %}
+                    <th scope="row">{{account.id}}</th>
+                    <td>{{account.name}}</td>
+                    <td>{{account.cost_basis}}</td>
+                    <td>{{account.current_value}}</td>
+                    <td>{{account.porfolio_return}}</td>
+                    <td><a class='btn btn-success' href="{% url 'customer-trade-detail' account.account_id%}"> <i class="bi bi-view-list"></i></a></td>
+
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock main %}
