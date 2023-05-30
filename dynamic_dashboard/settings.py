@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,12 +91,30 @@ WSGI_APPLICATION = 'dynamic_dashboard.wsgi.application'
 
 
 DATABASES = {
-       'default': {
-           'ENGINE': 'djongo',
-           'NAME': 'dashboard',
-           'ENFORCE_SCHEMA': False,
-       }
-}
+        'default': {
+            'ENGINE': 'djongo',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'name': 'dashboard',
+                'host': "mongodb://mongo:VyIrWru9QNX8cLAB9Utz@containers-us-west-171.railway.app:6381",
+
+                'port': 6381,
+                'username': 'mongo',
+                'password': 'VyIrWru9QNX8cLAB9Utz',
+                'authMechanism': 'SCRAM-SHA-1'
+            },
+
+        }
+    }
+
+# DATABASES = {
+#        'default': {
+#            'ENGINE': 'djongo',
+#            'NAME': 'dashboard',
+#            'ENFORCE_SCHEMA': False,
+#        }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -147,4 +164,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/accounts/login'
-
